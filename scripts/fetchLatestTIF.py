@@ -8,11 +8,12 @@
 import os
 import pysftp
 
-
+# connection parameters
 HOSTNAME = 'sftp.floodforesight.com'
 USERNAME = os.environ['JBA_USERNAME']
 PASSWORD = os.environ['JBA_PASSWORD']
 
+# opening sftp connection
 with pysftp.Connection(host=HOSTNAME, username=USERNAME, password=PASSWORD) as sftp:
     print("Connection successfully established ... ")
     # Switch to a remote directory
