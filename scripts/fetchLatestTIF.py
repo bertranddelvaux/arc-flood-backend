@@ -13,9 +13,14 @@ HOSTNAME = 'sftp.floodforesight.com'
 USERNAME = os.environ['JBA_USERNAME']
 PASSWORD = os.environ['JBA_PASSWORD']
 
-def createFolderIfNotExists(folder):
+
+def indent(n):
+    return n * '\t'
+
+
+def createFolderIfNotExists(folder, n):
     if not(os.path.exists(folder)):
-        print(f'Creating {folder} folder')
+        print(f'{indent(n)}Creating {folder} folder')
         os.makedirs(folder)
     # switch to folder
     os.chdir(folder)
@@ -27,17 +32,16 @@ with pysftp.Connection(host=HOSTNAME, username=USERNAME, password=PASSWORD) as s
 
     # check if data folder exists
     folder = 'data'
-    createFolderIfNotExists(folder)
+    createFolderIfNotExists(folder, n=0)
     root_folder = os.path.abspath(os.getcwd())
 
     # list countries
-    countries_list = sftp.listdir_attr()
-    for country in countries_list:
-        os.chdir(root_folder)
-        folder = country.filename
-        print(f'\tFound country {folder}')
-        createFolderIfNotExists(folder)  # check if country exists
-        # back to main folder
+    countries = [c.filename for c in sftp.listdir_attr()]
+    for country in countries:
+        os.chdir(root_folder)  # switch to root_folder
+        n = 1
+        print(f'{indent(n)}Found country {country}')
+        createFolderIfNotExists(country, n)  # check if country exists
 
     # Switch to a remote directory
     sftp.cwd('moz')
