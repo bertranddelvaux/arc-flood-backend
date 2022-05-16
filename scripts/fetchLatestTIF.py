@@ -40,7 +40,7 @@ with pysftp.Connection(host=HOSTNAME, username=USERNAME, password=PASSWORD) as s
     sftp_data_path = os.path.abspath(sftp.getcwd())
 
     # list countries
-    countries = [c.filename for c in sftp.listdir_attr()]
+    countries = sftp.listdir() # [c.filename for c in sftp.listdir_attr()]
     n = 1
     for country in countries:
         # local
@@ -52,6 +52,7 @@ with pysftp.Connection(host=HOSTNAME, username=USERNAME, password=PASSWORD) as s
         sftp.chdir(sftp_data_path)
         sftp.chdir(country)  # switch sftp to current folder
         sftp_country_path = os.path.abspath(sftp.getcwd())
+
 
 
 
