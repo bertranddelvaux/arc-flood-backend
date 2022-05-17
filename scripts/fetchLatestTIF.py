@@ -8,23 +8,33 @@
 import os
 import pysftp
 
-
+# connection parameters
 HOSTNAME = 'sftp.floodforesight.com'
 USERNAME = os.environ['JBA_USERNAME']
 PASSWORD = os.environ['JBA_PASSWORD']
 
+
+def indent(n):
+    return n * '\t'
+
+
+def createFolderIfNotExists(folder, n):
+    if not(os.path.exists(folder)):
+        print(f'{indent(n)}Creating {folder} folder')
+        os.makedirs(folder)
+    # switch to folder
+    os.chdir(folder)
+    return
+
+# opening sftp connection
 with pysftp.Connection(host=HOSTNAME, username=USERNAME, password=PASSWORD) as sftp:
     print("Connection successfully established ... ")
-    # Switch to a remote directory
-    sftp.cwd('moz')
-    sftp.cwd('raster')
-    sftp.cwd('2022')
-    sftp.cwd('05')
-    sftp.cwd('15')
 
-    # Obtain structure of the remote directory '/opt'
-    directory_structure = sftp.listdir_attr()
+    # data
+    n = 0  # indentation level
+    data = 'data'
+    createFolderIfNotExists(data, n)  # check if data folder exists
+    data_path = os.path.abspath(os.getcwd())  # get absolute path for future reference
 
-    # Print data
-    for attr in directory_structure:
-        print(attr.filename, attr)
+    sftp.get_r('/', data_path, preserve_mtime=True)
+    #sftp.get_r('/moz/raster/2022/04/28', data_path, preserve_mtime=False)
