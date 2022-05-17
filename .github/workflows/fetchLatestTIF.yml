@@ -42,8 +42,8 @@ jobs:
       # execute python script fetchLatestTIF.py
       - name: execute python script fetchLatestTIF.py
         env:
-          KAC_USERNAME: ${{ secrets.JBA_USERNAME }}
-          KAC_PASSWORD: ${{ secrets.JBA_PASSWORD }}
+          JBA_USERNAME: ${{ secrets.JBA_USERNAME }}
+          JBA_PASSWORD: ${{ secrets.JBA_PASSWORD }}
         run: python scripts/fetchLatestTIF.py
       
       # commit files
