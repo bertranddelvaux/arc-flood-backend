@@ -12,6 +12,8 @@ import pysftp
 HOSTNAME = 'sftp.floodforesight.com'
 USERNAME = os.environ['JBA_USERNAME']
 PASSWORD = os.environ['JBA_PASSWORD']
+cnopts = pysftp.CnOpts()
+cnopts.hostkeys = None
 
 
 def indent(n):
@@ -27,7 +29,7 @@ def createFolderIfNotExists(folder, n):
     return
 
 # opening sftp connection
-with pysftp.Connection(host=HOSTNAME, username=USERNAME, password=PASSWORD) as sftp:
+with pysftp.Connection(host=HOSTNAME, username=USERNAME, password=PASSWORD, cnopts=cnopts) as sftp:
     print("Connection successfully established ... ")
 
     # data
@@ -36,5 +38,5 @@ with pysftp.Connection(host=HOSTNAME, username=USERNAME, password=PASSWORD) as s
     createFolderIfNotExists(data, n)  # check if data folder exists
     data_path = os.path.abspath(os.getcwd())  # get absolute path for future reference
 
-    sftp.get_r('/', data_path, preserve_mtime=True)
-    #sftp.get_r('/moz/raster/2022/04/28', data_path, preserve_mtime=False)
+    #sftp.get_r('/', data_path, preserve_mtime=True)
+    sftp.get_r('/moz/raster/2022/04/28', data_path, preserve_mtime=False)
