@@ -40,4 +40,4 @@ with pysftp.Connection(host=HOSTNAME, username=USERNAME, password=PASSWORD, cnop
 
     #sftp.get_r('/', data_path, preserve_mtime=True)
     #sftp.get_r('/moz/raster/2022/04/28', data_path, preserve_mtime=False)
-    sftp.get_r('/moz', data_path, preserve_mtime=False)
+    sftp.get_r('/moz/raster', data_path, preserve_mtime=False)
