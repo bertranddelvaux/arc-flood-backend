@@ -38,5 +38,5 @@ with pysftp.Connection(host=HOSTNAME, username=USERNAME, password=PASSWORD, cnop
     createFolderIfNotExists(data, n)  # check if data folder exists
     data_path = os.path.abspath(os.getcwd())  # get absolute path for future reference
 
-    sftp.get_r('/', data_path, preserve_mtime=True)
-    #sftp.get_r('/moz/raster/2022/04/28', data_path, preserve_mtime=False)
+    #sftp.get_r('/', data_path, preserve_mtime=True)
+    sftp.get_r('/moz/raster/2022/04/28', data_path, preserve_mtime=False)
